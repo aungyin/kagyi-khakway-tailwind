@@ -1,0 +1,94 @@
+<template>
+  <div id="consonant">
+    <!-- Header -->
+    <!-- <h2 class="p-3 bg-gray-800 text-gray-100 font-semibold sm:hidden">子音アルファペット</h2> -->
+
+    <!-- Body -->
+    <div class="px-5">
+      <div class="px-4 fixed w-full top-0 left-0 mt-12">
+        <div class="w-full bg-white">
+          <div class="mt-5 text-center">
+            <p class=" text-gray-800 text-xs sm:text-lg">ミャンマー語黒板</p>
+            <p class=" text-gray-800 text-md sm:text-4xl font-bold">ミャンマー子音３３アルファペット</p>
+          </div>
+  
+          <div class=" mx-auto sm:w-3/4">
+            <!-- Display Block -->
+            <div class=" mt-6 py-2 text-center bg-gray-800">
+              <div class=" text-gray-200 text-xl"> {{ phrase }} </div>
+              <div class=" text-gray-200 text-xs sm:text-md mt-3"> 発音 </div>
+              <div class=" text-gray-200 text-xl sm:text-lg"> {{ pronunciation }} </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Consonant Table -->
+      <div class=" mt-64 mx-auto sm:w-3/4">
+        <div class="flex flex-wrap justify-center -mx-2">
+          <div class="w-1/5 px-1" v-for="item in items" :key="item.letter">
+            <div @click="showPhrase(item)" :class="[item.color, {'bg-gray-300': selected == item.letter} ]" class="py-2 text-4xl text-center sm:text-6xl font-semibold border-gray-400 border"> {{ item.letter }} </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script>
+
+const data = [
+  { letter: 'က', phrase:'က - ကလေးငယ် ချစ်စဖွယ်', pronunciation:'ka_gyi - ka layy nge chit sa phwel', color: 'text-yellow-500' },
+  { letter: 'ခ', phrase:'ခ - ခရေကုံး မလေးပြုံ', pronunciation:'kha_kwayy - kha yay kone ma layy pyone', color: 'text-green-500' },
+  { letter: 'ဂ', phrase:'ဂ - ဂဏန်းသင် ပြုံးရွှင်ရွှင်', pronunciation:'ga_nge - gan nann thin pyone shwin shwin', color: 'text-gray-500' },
+  { letter: 'ဃ', phrase:'ဃ - ', pronunciation:'ga_gyi - ', color: 'text-red-500' },
+  { letter: 'င', phrase:'င - ငချိတ်ပေါင်း စားလို့ကောင်း', pronunciation:'nga -blue nga chate paung sarr lo kaung', color: 'text--500' },
+  { letter: 'စ', phrase:'စ - စခန်းသာ တောင်တန်းပြာ', pronunciation:'sa_lone - sa khann thar taung tan pyar', color: 'text-yellow-500' },
+  { letter: 'ဆ', phrase:'ဆ - ဆရာမ ရိုသေကြ', pronunciation:'sa_lane - sa yar ma yo thay gya', color: 'text-green-500' },
+  { letter: 'ဇ', phrase:'ဇ - ဇလပ်ဖြူသင်းကြူကြူ', pronunciation:'za_gwel - za lat phyu thinn kyu kyu', color: 'text-gray-500' },
+  { letter: 'ဈ', phrase:'ဈ - ', pronunciation:'za_myin_zwe - ', color: 'text-red-500' },
+  { letter: 'ည', phrase:'ည - ညနေခင်း ရေခပ်ဆင်း', pronunciation:'nya - nya nayblue khinn yay khat sinn', color: 'text--500' },
+  { letter: 'ဋ', phrase:'ဋ - ', pronunciation:'ta_talin_jate - ', color: 'text-yellow-500' },
+  { letter: 'ဌ', phrase:'ဌ - ', pronunciation:'hta_win_be - ', color: 'text-green-500' },
+  { letter: 'ဍ', phrase:'ဍ - ', pronunciation:'da_yin_gaute -', color: 'text-gray-500' },
+  { letter: 'ဎ', phrase:'ဎ - ', pronunciation:'da_yin_mote -', color: 'text-red-500' },
+  { letter: 'ဏ', phrase:'ဏ - ', pronunciation:'na_gyi -', color: 'text-blue-500' },
+  { letter: 'တ', phrase:'တ - တမာပင် ရွာအဝင်', pronunciation:'ta_win_pu - ta mar pin ywar a win', color: 'text-yellow-500' },
+  { letter: 'ထ', phrase:'ထ - ထမင်းပွဲ လက်ဆုံနွှဲ', pronunciation:'hta_sin_htoo - hta minn pwe lat sone hnwel', color: 'text-green-500' },
+  { letter: 'ဒ', phrase:'ဒ - ဒရယ်ရုံ သားမျိုးစုံ', pronunciation:'da_dwayy - da yal yone tharr myo sone', color: 'text-gray-500' },
+  { letter: 'ဓ', phrase:'ဓ - ဓနိတန်း ပင်လယ်ကမ်း', pronunciation:'da_wat_chite - da ni taw', color: 'text-red-500' },
+  { letter: 'န', phrase:'န - နဖူးပြင် နံ့သာတင်', pronunciation:'na_nge - ', color: 'text-blue-500' },
+  { letter: 'ပ', phrase:'ပ - ပလွေမှုတ် ကိုဖိုးတုတ်', pronunciation:'pa_saute - ', color: 'text-yellow-500' },
+  { letter: 'ဖ', phrase:'ဖ - ဖရုံယို အလွန်ချို', pronunciation:'pha_wa_htoke - pha yone yo a lon cho', color: 'text-green-500' },
+  { letter: 'ဗ', phrase:'ဗ - ဗလကြီး ဆင်ပြောင်စီး', pronunciation:'ba_lat_chite - ba la gyii sin pyaung see', color: 'texgrayt--500' },
+  { letter: 'ဘ', phrase:'ဘ - ဘဘိုးအို စီးလိုကြို', pronunciation:'ba_gone - ', color: 'text-red-500' },
+  { letter: 'မ', phrase:'မ - မမလေး ဝလုံးရေး', pronunciation:'ma - ma ma layy wa loneblue yayy', color: 'text--500' },
+  { letter: 'ယ', phrase:'ယ - ယမင်းခင် ကကြိုးဆင်', pronunciation:'ya_pa_lat - ya minn khin ka kyo sin', color: 'text-yellow-500' },
+  { letter: 'ရ', phrase:'ရ - ရထားကြီး ပျော်ပျော်စီး', pronunciation:'ya_gaute - ya htarr gyi pyaw pyaw see', color: 'text-green-500' },
+  { letter: 'လ', phrase:'လ - လဝါဝါ ထိန်ထိန်သာ', pronunciation:'la - la war war htain htain thar', color: 'text-gray-500' },
+  { letter: 'ဝ', phrase:'ဝ - ဝတုတ်တုတ် ဖိုး၀ရုပ်', pronunciation:'wa - ', color: 'text-red-500' },
+  { letter: 'သ', phrase:'သ - သပြေညို အောင်ပွဲကြို', pronunciation:'tha - tha pyay nyo aungblue pwe kyo', color: 'text--500' },
+  { letter: 'ဟ', phrase:'ဟ - ဟ ဟာ ဟား ရယ်လိုက်ရ', pronunciation:'ha - ha ha ha yee lite ya', color: 'text-green-500' },
+  { letter: 'ဠ', phrase:'ဠ - ', pronunciation:'la_gyi - ', color: 'text-gray-500' },
+  { letter: 'အ', phrase:'အ - အမိမြေ ဒို့တိုင်းပြည် ငါတို့ချစ်တဲ့ မြေ', pronunciation:'a - a mi myay do tine pyay ngar do chit te myay', color: 'text-red-500' },
+]
+
+export default {
+  data() {
+    return {
+      items: data,
+      phrase: "က - ကလေးငယ် ချစ်စဖွယ်",
+      pronunciation: "ka_gyi - ka layy nge chit sa phwel",
+      selected: "က"
+    }
+  },
+  methods: {
+    showPhrase: function(consonant) {
+      this.phrase = consonant.phrase
+      this.pronunciation = consonant.pronunciation
+      this.selected = consonant.letter
+    }
+  }
+}
+</script>

@@ -1,4 +1,5 @@
 # kagyi-khakway-tailwind
+Vue-cli & Tailwindcss version of  [kagyi-khakway](https://github.com/PaingThu/kagyi-khakway)
 
 ## Project setup
 ```
